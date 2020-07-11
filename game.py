@@ -12,18 +12,21 @@ keys = [False, False, False, False]
 playerpos=[100,100]
 acc=[0,0]
 arrows=[]
-badtimer=100
+badtimer=200
 badtimer1=0
 badguys=[[640,100]]
 healthvalue=194
 pygame.mixer.init()
 
 # 3 - Load images
-player = pygame.image.load("resources/images/dude.png")
-grass = pygame.image.load("resources/images/grass.png")
-castle = pygame.image.load("resources/images/castle.png")
-arrow = pygame.image.load("resources/images/bullet.png")
-badguyimg1 = pygame.image.load("resources/images/badguy.png")
+player = pygame.image.load("resources/images/halcon-milenario-70.png")
+grass = pygame.image.load("resources/images/spance-100x100.png")
+castle = pygame.image.load("resources/images/planet-1-min.png")
+castle2 = pygame.image.load("resources/images/planet-2-min.png")
+castle3 = pygame.image.load("resources/images/planet-3-min.png")
+castle4 = pygame.image.load("resources/images/planet-4-min.png")
+arrow = pygame.image.load("resources/images/rayo-azul-42x6.png")
+badguyimg1 = pygame.image.load("resources/images/casa-imperial-70.png")
 badguyimg=badguyimg1
 healthbar = pygame.image.load("resources/images/healthbar.png")
 health = pygame.image.load("resources/images/health.png")
@@ -31,13 +34,13 @@ gameover = pygame.image.load("resources/images/gameover.png")
 youwin = pygame.image.load("resources/images/youwin.png")
 
 # 3.1 - Load audio
-hit = pygame.mixer.Sound("resources/audio/explode.wav")
+hit = pygame.mixer.Sound("resources/audio/fighters-explode.wav")
 enemy = pygame.mixer.Sound("resources/audio/enemy.wav")
-shoot = pygame.mixer.Sound("resources/audio/shoot.wav")
+shoot = pygame.mixer.Sound("resources/audio/xwing-fire.wav")
 hit.set_volume(0.05)
 enemy.set_volume(0.05)
 shoot.set_volume(0.05)
-pygame.mixer.music.load('resources/audio/moonlight.wav')
+pygame.mixer.music.load('resources/audio/music-battle.wav')
 pygame.mixer.music.play(-1, 0.0)
 pygame.mixer.music.set_volume(0.25)
 
@@ -53,9 +56,9 @@ while running:
         for y in range(height/grass.get_height()+1):
             screen.blit(grass,(x*100,y*100))
     screen.blit(castle,(0,30))
-    screen.blit(castle,(0,135))
-    screen.blit(castle,(0,240))
-    screen.blit(castle,(0,345 ))
+    screen.blit(castle2,(0,135))
+    screen.blit(castle3,(0,240))
+    screen.blit(castle4,(0,345 ))
     # 6.1 - Set player position and rotation
     position = pygame.mouse.get_pos()
     angle = math.atan2(position[1]-(playerpos[1]+32),position[0]-(playerpos[0]+26))
@@ -78,7 +81,7 @@ while running:
     # 6.3 - Draw badgers
     if badtimer==0:
         badguys.append([640, random.randint(50,430)])
-        badtimer=100-(badtimer1*2)
+        badtimer=200-(badtimer1*2)
         if badtimer1>=35:
             badtimer1=35
         else:
@@ -114,7 +117,7 @@ while running:
         screen.blit(badguyimg, badguy)
     # 6.4 - Draw clock
     font = pygame.font.Font(None, 24)
-    survivedtext = font.render(str((90000-pygame.time.get_ticks())/60000)+":"+str((90000-pygame.time.get_ticks())/1000%60).zfill(2), True, (0,0,0))
+    survivedtext = font.render(str((30000-pygame.time.get_ticks())/60000)+":"+str((30000-pygame.time.get_ticks())/1000%60).zfill(2), True, (255,255,255))
     textRect = survivedtext.get_rect()
     textRect.topright=[635,5]
     screen.blit(survivedtext, textRect)
@@ -164,7 +167,7 @@ while running:
     elif keys[3]:
         playerpos[0]+=5
     #10 - Win/Lose check
-    if pygame.time.get_ticks()>=90000:
+    if pygame.time.get_ticks()>=30000:
         running=0
         exitcode=1
     if healthvalue<=0:
